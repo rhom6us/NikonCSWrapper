@@ -5,6 +5,7 @@
 //
 
 using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -136,7 +137,7 @@ namespace Nikon
     //
     // NikonEnum - wrapper for NkMAIDEnum
     //
-    public class NikonEnum
+    public class NikonEnum: IEnumerable<object>
     {
         object[] _list;
         NkMAIDEnum _enum;
@@ -259,9 +260,17 @@ namespace Nikon
             }
         }
 
+        public IEnumerator<object> GetEnumerator() {
+            return _list.AsEnumerable().GetEnumerator();
+        }
+
         public override string ToString()
         {
             return (Value != null) ? Value.ToString() : null;
+        }
+
+        IEnumerator IEnumerable.GetEnumerator() {
+            return GetEnumerator();
         }
     }
 }
